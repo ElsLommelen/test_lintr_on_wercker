@@ -22,14 +22,6 @@ To install the development version, run this code:
 remotes::install_github("inbo/LSVI@develop", build_vignettes = TRUE)
 ```
 
-# Documentation
-
-After installation, a user manual is available by running this code:
-
-```r
-vignette("Handleiding", package = "LSVI")
-```
-
 # Citation
 
 Please use the output of `citation("LSVI")`
