@@ -24,8 +24,14 @@ License: GPL-3
 LazyData: true
 Encoding: UTF-8
 Imports:
+    assertthat,
     rgbif,
-    testthat
+    testthat,
+    DBI,
+    dplyr,
+    tidyr,
+    rlang,
+    stringr
 Suggests:
     knitr
 RoxygenNote: 6.1.1
@@ -33,6 +39,13 @@ VignetteBuilder: knitr
 URL: https://github.com/ElsLommelen/test_lintr_on_wercker
 BugReports: https://github.com/ElsLommelen/test_lintr_on_wercker/issues
 Collate: 
+    'connecteerMetLSVIdb.R'
+    'controleerInvoerwaarde.R'
+    'geefInvoervereisten.R'
+    'invoercontroleKwaliteitsniveau.R'
+    'invoercontroleVersie.R'
+    'maakConnectiePool.R'
     'parseTaxonnaam.R'
     'postparseTaxonnaam.R'
     'preparseTaxonnaam.R'
+    'selecteerIndicatoren.R'
