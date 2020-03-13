@@ -7,24 +7,6 @@ The `LSVI` package bundles a number of functions to support researchers studying
 
 The package is written in Dutch.
 
-# Installation
-
-To install `LSVI` from Github, start a new R session and run this code (before loading any packages).
-
-```r
-# install.packages("remotes")
-remotes::install_github("inbo/LSVI", build_vignettes = TRUE)
-```
-
-To install the development version, run this code: 
-
-```r
-remotes::install_github("inbo/LSVI@develop", build_vignettes = TRUE)
-```
-
-# Citation
-
-Please use the output of `citation("LSVI")`
 
 # Contributor Code of Conduct
 

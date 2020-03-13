@@ -1,4 +1,4 @@
 library(testthat)
-library(LSVI)
+library(testlintr)
 
-test_package("LSVI")
+test_package("testlintr")

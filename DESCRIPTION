@@ -1,4 +1,4 @@
-Package: LSVI
+Package: testlintr
 Title: Rekenmodule Lokale Staat Van Instandhouding van habitattypen
 Version: 0.0.0.9001
 Date: 2019-01-16
@@ -24,79 +24,15 @@ License: GPL-3
 LazyData: true
 Encoding: UTF-8
 Imports:
-    assertthat,
-    DBI,
-    plyr,
-    dplyr,
-    lazyeval,
-    methods,
-    odbc,
-    pool,
-    readr,
     rgbif,
-    rlang,
-    rmarkdown,
-    RSQLite,
-    stringr,
-    testthat,
-    tidyr,
-    utils,
-    xtable
+    testthat
 Suggests:
     knitr
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
-URL: https://github.com/inbo/LSVI
-BugReports: https://github.com/inbo/LSVI/issues
+URL: https://github.com/ElsLommelen/test_lintr_on_wercker
+BugReports: https://github.com/ElsLommelen/test_lintr_on_wercker/issues
 Collate: 
-    'berekenLSVIbasis.R'
-    'berekenStatus.R'
-    'berekenVerschilscores.R'
-    'berekenVoorwaarde.R'
-    'combinerenVerschilscore.R'
-    'combinerenVoorwaarden.R'
-    'connecteerMetLSVIdb.R'
-    'connecteerMetLSVIdbServer.R'
-    'controleerInvoerwaarde.R'
-    'deselecteerKenmerkenInOpname.R'
-    'geefInfoHabitatfiche.R'
-    'geefInvoervereisten.R'
-    'geefSoortenlijst.R'
-    'geefSoortenlijstVoorIDs.R'
-    'geefUniekeWaarden.R'
-    'geefVersieInfo.R'
-    'geefVertaallijst.R'
-    'invoercontroleData_habitat.R'
-    'invoercontroleData_soortenKenmerken.R'
-    'invoercontroleData_voorwaarden.R'
-    'invoercontroleKwaliteitsniveau.R'
-    'invoercontroleVersie.R'
-    'logDatabankfouten.R'
-    'maakConnectiePool.R'
-    'maakConnectiePoolServer.R'
-    'maakHabitatfiches.R'
-    'maakLSVIrapport.R'
     'parseTaxonnaam.R'
     'postparseTaxonnaam.R'
     'preparseTaxonnaam.R'
-    's4_AnalyseVariabele.R'
-    's4_aandeel.R'
-    's4_bedekking.R'
-    's4_aandeelKruidlaag.R'
-    's4_aantal.R'
-    's4_aantalGroepen.R'
-    's4_analyseVariabele_c.R'
-    's4_bedekkingExcl.R'
-    's4_bedekkingLaag.R'
-    's4_bedekkingLaagExcl.R'
-    's4_bedekkingLaagPlus.R'
-    's4_bedekkingSom.R'
-    's4_maxBedekking.R'
-    's4_maxBedekking2s.R'
-    's4_maxBedekkingExcl.R'
-    's4_meting.R'
-    'selecteerIndicatoren.R'
-    'selecteerKenmerkenInOpname.R'
-    'vertaalIntervalUitvoer.R'
-    'vertaalInvoerInterval.R'
-    'zzz.R'
