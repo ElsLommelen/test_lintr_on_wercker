@@ -13,7 +13,6 @@
 #' @examples
 #' library(testlintr)
 #' ConnectieLSVIhabitats <- connecteerMetLSVIdb()
-#' geefVersieInfo(ConnectieLSVIhabitats)
 #' library(DBI)
 #' dbGetQuery(ConnectieLSVIhabitats,
 #'            "SELECT VersieLSVI, Referentie FROM Versie")

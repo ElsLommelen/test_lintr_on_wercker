@@ -6,8 +6,6 @@
 #' waar de gegevens voor bijvoorbeeld een welbepaalde versie of welbepaalde
 #' habitattypes geselecteerd moeten kunnen worden.
 #'
-#' @template Zoekparameters
-#'
 #' @param ConnectieLSVIhabitats Connectie met de databank met indicatoren voor
 #' de LSVI van habitats, in te stellen d.m.v. functie connecteerMetLSVIdb.
 #' @param Versie De versie van het LSVI-rapport, bv. "Versie 2" of "Versie 3".

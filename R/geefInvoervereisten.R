@@ -43,7 +43,7 @@
 #'
 #'
 #' @inheritParams selecteerIndicatoren
-#' @inheritParams berekenLSVIbasis
+#' @param Kwaliteitsniveau blabla
 #' @param Weergave Wat moet er in de tabel weergegeven worden?  De default
 #' 'basis' geeft een meer overzichtelijke tabel waarbij mogelijke invoerwaarden
 #' gescheiden door een komma in 1 cel weergegeven worden, 'uitgebreid' geeft

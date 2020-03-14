@@ -15,7 +15,6 @@
 #' @examples
 #' library(testlintr)
 #' maakConnectiePool()
-#' geefVersieInfo()
 #' library(pool)
 #' poolClose(ConnectiePool)
 #'

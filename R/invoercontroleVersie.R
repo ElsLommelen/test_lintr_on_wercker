@@ -8,7 +8,7 @@
 #' aangeroepen wordt).
 #'
 #' @param Versie Waarde waarop invoercontrole moet gebeuren.
-#' @inheritParams berekenLSVIbasis
+#' @inheritParams geefInvoervereisten
 #'
 #' @importFrom assertthat assert_that is.string
 #' @importFrom dplyr %>%
