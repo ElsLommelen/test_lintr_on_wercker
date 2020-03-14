@@ -101,9 +101,6 @@ geefInvoervereisten <- function(Versie = "alle",
   )
   match.arg(Weergave)
 
-  Kwaliteitsniveau <-
-    invoercontroleKwaliteitsniveau(Kwaliteitsniveau, ConnectieLSVIhabitats)
-
 
   Selectiewaarden <-
     selecteerIndicatoren(
