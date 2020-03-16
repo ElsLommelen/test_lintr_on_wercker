@@ -20,10 +20,9 @@
 #'
 #'
 #' @importFrom DBI dbGetQuery
-#' @importFrom assertthat assert_that is.string
+#' @importFrom assertthat assert_that
 #' @importFrom dplyr %>% mutate
 #' @importFrom rlang .data
-#' @importFrom stringr str_to_sentence
 #'
 #'
 selecteerIndicatoren <-
@@ -53,10 +52,6 @@ selecteerIndicatoren <-
 
     #eerst de selectiegegevens ophalen en de nodige gegevens uit tabel
     #Indicator_habitat, query samenstellen op basis van parameters
-    Join <- "INNER"
-    QueryEinde <-
-      "Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID"
-
     query <-
       sprintf(
         "WITH Habitatselectie
@@ -83,7 +78,7 @@ selecteerIndicatoren <-
           INNER JOIN Habitattype Ht2
             ON Habitatselectie.HabitatsubtypeId = Ht2.Id
           INNER JOIN Habitatgroep ON Ht1.HabitatgroepId = Habitatgroep.Id
-        %s JOIN (((Indicator_habitat
+        INNER JOIN (((Indicator_habitat
         INNER JOIN
           (Indicator INNER JOIN Criterium
             ON Indicator.CriteriumID = Criterium.Id)
@@ -92,8 +87,8 @@ selecteerIndicatoren <-
         LEFT JOIN IndicatortabellenKoppeling
         ON Indicator_habitat.Id =
           IndicatortabellenKoppeling.Indicator_habitatId)
-        ON %s",
-        query_uitbreiding, Join, QueryEinde
+        ON Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID",
+        query_uitbreiding
       )
 
     Selectiegegevens <-
