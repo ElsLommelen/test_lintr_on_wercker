@@ -58,7 +58,6 @@ selecteerIndicatoren <-
       )
       SELECT Versie.VersieLSVI AS Versie, Ht1.Code AS Habitattype,
           Ht2.Code AS Habitatsubtype,
-          Criterium.Naam AS Criterium, Indicator.Naam AS Indicator,
           Indicator_habitat.Id AS Indicator_habitatID,
           Indicator_habitat.TaxongroepId
       FROM Habitatselectie
@@ -67,11 +66,7 @@ selecteerIndicatoren <-
         INNER JOIN Habitattype Ht2
           ON Habitatselectie.HabitatsubtypeId = Ht2.Id
         INNER JOIN Habitatgroep ON Ht1.HabitatgroepId = Habitatgroep.Id
-      INNER JOIN ((Indicator_habitat
-      INNER JOIN
-        (Indicator INNER JOIN Criterium
-          ON Indicator.CriteriumID = Criterium.Id)
-      ON Indicator_habitat.IndicatorID = Indicator.Id)
+      INNER JOIN (Indicator_habitat
       INNER JOIN Versie ON Indicator_habitat.VersieID = Versie.Id)
       ON Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID"
 
