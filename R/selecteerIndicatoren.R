@@ -8,27 +8,6 @@
 #'
 #' @param ConnectieLSVIhabitats Connectie met de databank met indicatoren voor
 #' de LSVI van habitats, in te stellen d.m.v. functie connecteerMetLSVIdb.
-#' @param Versie De versie van het LSVI-rapport, bv. "Versie 2" of "Versie 3".
-#' Bij de default "alle" worden de gegevens voor de verschillende versies
-#' gegeven.  De mogelijke waarden kunnen opgevraagd worden via
-#' geefUniekeWaarden("Versie", "VersieLSVI") of geefVersieInfo().
-#' @param Habitatgroep Parameter waarmee alle habitats van een bepaalde
-#' habitatgroep kunnen geselecteerd worden, bv. "Bossen", "Heiden",
-#' "(Half-)natuurlijke graslanden", "Zoete en brakke wateren",...   en "alle"
-#' (=default).  Deze waarde moet niet gespecifieerd worden als een bepaald
-#' habitat(sub)type geselecteerd wordt.  De mogelijke waarden kunnen opgevraagd
-#' worden via geefUniekeWaarden("Habitatgroep", "Naam").
-#' @param Habitattype Parameter waarmee een habitattype of habitatsubtype kan
-#' geselecteerd worden.  Als dit een habitattype betreft met meerdere subtypes,
-#' zullen de gegevens van alle subtypes van dit habitattype weergegeven worden.
-#' De mogelijke waarden kunnen opgevraagd worden via
-#' geefUniekeWaarden("Habitattype", "Code").  Er is voor deze parameter ook de
-#' mogelijkheid om een vector van meerdere habitat(sub)typen op te geven.
-#' @param Criterium Het LSVI-criterium waarvoor de gegevens geselecteerd
-#' worden: "Vegetatie", "Structuur", "Verstoring" of "alle".
-#' @param Indicator De indicator waarvoor de gegevens uit de databank gehaald
-#' worden.  De mogelijke waarden kunnen opgevraagd worden via
-#' geefUniekeWaarden("Indicator", "Naam").
 #' @param HabitatnamenToevoegen Moeten de namen van de habitattypen en
 #' habitatsubtypen toegevoegd worden als extra kolommen?  (Bij FALSE worden
 #' enkel de habitatcodes toegevoegd, niet de volledige namen.)
@@ -39,19 +18,6 @@
 #'
 #' @export
 #'
-#' @examples
-#' # Omwille van de iets langere lange duurtijd van de commando's staat bij
-#' # onderstaande voorbeelden de vermelding 'dontrun' (om problemen te vermijden
-#' # bij het testen van het package). Maar de voorbeelden werken en kunnen zeker
-#' # uitgetest worden.
-#' \dontrun{
-#' library(testlintr)
-#' maakConnectiePool()
-#' selecteerIndicatoren(Versie = "Versie 2.0", Habitattype = "4030")
-#' selecteerIndicatoren(Versie = "Versie 2.0", Habitatgroep = "Heiden")
-#' library(pool)
-#' poolClose(ConnectiePool)
-#' }
 #'
 #' @importFrom DBI dbGetQuery
 #' @importFrom assertthat assert_that is.string
@@ -61,8 +27,7 @@
 #'
 #'
 selecteerIndicatoren <-
-  function(Habitattype = "alle",
-           HabitatnamenToevoegen = FALSE,
+  function(HabitatnamenToevoegen = FALSE,
            ConnectieLSVIhabitats = NULL) {
 
     if (is.null(ConnectieLSVIhabitats)) {
@@ -74,15 +39,6 @@ selecteerIndicatoren <-
       inherits(ConnectieLSVIhabitats, "DBIConnection") |
         inherits(ConnectieLSVIhabitats, "Pool"),
       msg = "Er is geen connectie met de databank met de LSVI-indicatoren. Maak een connectiepool met maakConnectiePool of geef een connectie mee met de parameter ConnectieLSVIhabitats." #nolint
-    )
-
-    if (is.numeric(Habitattype)) {
-      Habitattype <- as.character(Habitattype)
-    }
-    assert_that(is.character(Habitattype))
-    controleerInvoerwaarde(
-      "Habitattype", Habitattype,
-      "Habitattype", "Code", ConnectieLSVIhabitats, Tolower = FALSE
     )
 
     assert_that(is.logical(HabitatnamenToevoegen))
@@ -97,23 +53,9 @@ selecteerIndicatoren <-
 
     #eerst de selectiegegevens ophalen en de nodige gegevens uit tabel
     #Indicator_habitat, query samenstellen op basis van parameters
-    if (Habitattype[1] == "alle") {
-      Parametervoorwaarde <- FALSE
-      Join <- "INNER"
-      QueryEinde <-
-        "Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID"
-    } else {
-      Parametervoorwaarde <- TRUE
-      Join <- "LEFT"
-      Habitattypen <-
-        paste(Habitattype, collapse = "','")
-      QueryEinde <-
-        sprintf(
-          "(Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID
-            OR Habitatselectie.HabitattypeId = Indicator_habitat.HabitattypeID)
-          WHERE (Ht1.Code in ('%s') OR Ht2.Code in ('%s'))",
-        Habitattypen, Habitattypen)
-    }
+    Join <- "INNER"
+    QueryEinde <-
+      "Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID"
 
     query <-
       sprintf(
