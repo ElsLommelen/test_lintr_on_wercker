@@ -18,7 +18,7 @@ selecteerIndicatoren <-
   function(Testvariable = FALSE,
            Connectie = connecteerMetLSVIdb()) {
 
-    #this function call does not give a warning in lintr
+    #this function call only gives a warning in lintr if this comment precedes
     assert_that(inherits(Connectie, "DBIConnection"))
 
     #this function call gives a warning in lintr
@@ -45,9 +45,8 @@ selecteerIndicatoren <-
         INNER JOIN Habitattype Ht2
           ON Habitatselectie.HabitatsubtypeId = Ht2.Id"
 
-    #dbGetQuery and dplyr functions do not give a warning
-    Selectiegegevens <-
-      dbGetQuery(Connectie, query)
+    #dbGetQuery does not give a warning
+    Selectiegegevens <- dbGetQuery(Connectie, query)
 
     return(Selectiegegevens)
 
