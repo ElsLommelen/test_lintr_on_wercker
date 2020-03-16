@@ -42,7 +42,7 @@
 #' TypeSubVariabele 'Categorie' en SubInvoertype 'Beheermonitoringsschaal 2017'.
 #'
 #'
-#' @inheritParams selecteerIndicatoren
+#' @param ConnectieLSVIhabitats connection with SQLite database in package
 #'
 #' @return Deze functie geeft een tabel met de hierboven beschreven informatie
 #' uit de databank.
@@ -73,46 +73,13 @@
 #' @importFrom assertthat assert_that is.string
 #'
 #'
-geefInvoervereisten <- function(ConnectieLSVIhabitats = NULL) {
+geefInvoervereisten <- function(ConnectieLSVIhabitats = connecteerMetLSVIdb()) {
 
-  if (is.null(ConnectieLSVIhabitats)) {
-    if (exists("ConnectiePool")) {
-      ConnectieLSVIhabitats <- get("ConnectiePool", envir = .GlobalEnv)
-    }
-  }
   assert_that(
-    inherits(ConnectieLSVIhabitats, "DBIConnection") |
-      inherits(ConnectieLSVIhabitats, "Pool"),
+    inherits(ConnectieLSVIhabitats, "DBIConnection"),
     msg = "Er is geen connectie met de databank met de LSVI-indicatoren. Maak een connectiepool met maakConnectiePool of geef een connectie mee met de parameter ConnectieLSVIhabitats." #nolint
   )
 
-
-  query_lsvi_info <-
-    sprintf("SELECT Indicator_beoordeling.Id AS Indicator_beoordelingID,
-            Criterium.Naam AS Criterium, Indicator.Naam AS Indicator,
-            cast(Beoordeling.Beoordeling_letterlijk AS nvarchar(360))
-              AS Beoordeling,
-            Beoordeling.Kwaliteitsniveau,
-            Indicator_beoordeling.Belang,
-            Beoordeling.Id as BeoordelingID
-            FROM
-              (Indicator_beoordeling LEFT JOIN Beoordeling
-              ON Indicator_beoordeling.Id = Beoordeling.Indicator_beoordelingId)
-            LEFT JOIN
-              (Indicator INNER JOIN Criterium
-                ON Indicator.CriteriumId = Criterium.Id)
-            ON Indicator_beoordeling.IndicatorId = Indicator.Id")
-
-  LSVIinfo <-
-    dbGetQuery(ConnectieLSVIhabitats, query_lsvi_info)
-
-  BeoordelingIDs <-
-    paste(
-      unique(
-        (LSVIinfo %>% filter(!is.na(.data$BeoordelingID)))$BeoordelingID
-      ),
-      collapse = "','"
-    )
 
   query_combineren_voorwaarden <-
     sprintf("SELECT CV.Id, CV.BeoordelingId AS BeoordelingID,
@@ -263,9 +230,7 @@ geefInvoervereisten <- function(ConnectieLSVIhabitats = NULL) {
       query_voorwaardeinfo
     )
 
-  Invoervereisten <- LSVIinfo %>%
-    mutate(Indicator_beoordelingID = NULL) %>%
-    left_join(BasisVoorwaarden, by = c("BeoordelingID" = "BeoordelingID")) %>%
+  Invoervereisten <- BasisVoorwaarden %>%
     left_join(Voorwaardeinfo, by = c("VoorwaardeID" = "VoorwaardeID")) %>%
     distinct()
 

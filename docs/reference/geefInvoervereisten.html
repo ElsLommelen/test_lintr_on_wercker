@@ -184,66 +184,14 @@ TypeSubVariabele 'Categorie' en SubInvoertype 'Beheermonitoringsschaal 2017'.</p
     
     </div>
 
-    <pre class="usage"><span class='fu'>geefInvoervereisten</span>(<span class='kw'>Versie</span> <span class='kw'>=</span> <span class='st'>"alle"</span>, <span class='kw'>Habitatgroep</span> <span class='kw'>=</span> <span class='st'>"alle"</span>,
-  <span class='kw'>Habitattype</span> <span class='kw'>=</span> <span class='st'>"alle"</span>, <span class='kw'>Criterium</span> <span class='kw'>=</span> <span class='st'>"alle"</span>, <span class='kw'>Indicator</span> <span class='kw'>=</span> <span class='st'>"alle"</span>,
-  <span class='kw'>Kwaliteitsniveau</span> <span class='kw'>=</span> <span class='st'>"alle"</span>, <span class='kw'>Weergave</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"basis"</span>, <span class='st'>"uitgebreid"</span>),
-  <span class='kw'>ConnectieLSVIhabitats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>geefInvoervereisten</span>(<span class='kw'>ConnectieLSVIhabitats</span> <span class='kw'>=</span> <span class='fu'><a href='connecteerMetLSVIdb.html'>connecteerMetLSVIdb</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>Versie</th>
-      <td><p>De versie van het LSVI-rapport, bv. "Versie 2" of "Versie 3".
-Bij de default "alle" worden de gegevens voor de verschillende versies
-gegeven.  De mogelijke waarden kunnen opgevraagd worden via
-geefUniekeWaarden("Versie", "VersieLSVI") of geefVersieInfo().</p></td>
-    </tr>
-    <tr>
-      <th>Habitatgroep</th>
-      <td><p>Parameter waarmee alle habitats van een bepaalde
-habitatgroep kunnen geselecteerd worden, bv. "Bossen", "Heiden",
-"(Half-)natuurlijke graslanden", "Zoete en brakke wateren",...   en "alle"
-(=default).  Deze waarde moet niet gespecifieerd worden als een bepaald
-habitat(sub)type geselecteerd wordt.  De mogelijke waarden kunnen opgevraagd
-worden via geefUniekeWaarden("Habitatgroep", "Naam").</p></td>
-    </tr>
-    <tr>
-      <th>Habitattype</th>
-      <td><p>Parameter waarmee een habitattype of habitatsubtype kan
-geselecteerd worden.  Als dit een habitattype betreft met meerdere subtypes,
-zullen de gegevens van alle subtypes van dit habitattype weergegeven worden.
-De mogelijke waarden kunnen opgevraagd worden via
-geefUniekeWaarden("Habitattype", "Code").  Er is voor deze parameter ook de
-mogelijkheid om een vector van meerdere habitat(sub)typen op te geven.</p></td>
-    </tr>
-    <tr>
-      <th>Criterium</th>
-      <td><p>Het LSVI-criterium waarvoor de gegevens geselecteerd
-worden: "Vegetatie", "Structuur", "Verstoring" of "alle".</p></td>
-    </tr>
-    <tr>
-      <th>Indicator</th>
-      <td><p>De indicator waarvoor de gegevens uit de databank gehaald
-worden.  De mogelijke waarden kunnen opgevraagd worden via
-geefUniekeWaarden("Indicator", "Naam").</p></td>
-    </tr>
-    <tr>
-      <th>Kwaliteitsniveau</th>
-      <td><p>blabla</p></td>
-    </tr>
-    <tr>
-      <th>Weergave</th>
-      <td><p>Wat moet er in de tabel weergegeven worden?  De default
-'basis' geeft een meer overzichtelijke tabel waarbij mogelijke invoerwaarden
-gescheiden door een komma in 1 cel weergegeven worden, 'uitgebreid' geeft
-deze invoerwaarden met alle bijhorende informatie weer in aparte records,
-waardoor de tabel groot en onoverzichtelijk is.</p></td>
-    </tr>
-    <tr>
       <th>ConnectieLSVIhabitats</th>
-      <td><p>Connectie met de databank met indicatoren voor
-de LSVI van habitats, in te stellen d.m.v. functie connecteerMetLSVIdb.</p></td>
+      <td><p>connection with SQLite database in package</p></td>
     </tr>
     </table>
     
@@ -263,8 +211,7 @@ uit de databank.</p>
 <span class='fu'>maakConnectiePool</span>()
 <span class='fu'>geefInvoervereisten</span>(
   <span class='kw'>Versie</span> <span class='kw'>=</span> <span class='st'>"Versie 2.0"</span>,
-  <span class='kw'>Habitattype</span> <span class='kw'>=</span> <span class='st'>"4030"</span>,
-  <span class='kw'>Kwaliteitsniveau</span> <span class='kw'>=</span> <span class='st'>"1"</span>
+  <span class='kw'>Habitattype</span> <span class='kw'>=</span> <span class='st'>"4030"</span>
 )
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>pool</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/pool/topics/pool'>poolClose</a></span>(<span class='no'>ConnectiePool</span>)

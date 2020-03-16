@@ -30,8 +30,7 @@ Imports:
     tidyr,
     rlang,
     stringr,
-    RSQLite,
-    odbc
+    RSQLite
 Suggests:
     knitr
 RoxygenNote: 6.1.1
