@@ -27,7 +27,6 @@ Imports:
     assertthat,
     DBI,
     dplyr,
-    tidyr,
     rlang,
     stringr,
     RSQLite
@@ -40,7 +39,6 @@ BugReports: https://github.com/ElsLommelen/test_lintr_on_wercker/issues
 Collate: 
     'connecteerMetLSVIdb.R'
     'controleerInvoerwaarde.R'
-    'geefInvoervereisten.R'
     'geefUniekeWaarden.R'
     'invoercontroleVersie.R'
     'selecteerIndicatoren.R'
