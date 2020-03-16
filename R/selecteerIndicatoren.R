@@ -30,8 +30,7 @@ selecteerIndicatoren <-
            ConnectieLSVIhabitats = connecteerMetLSVIdb()) {
 
     assert_that(
-      inherits(ConnectieLSVIhabitats, "DBIConnection") |
-        inherits(ConnectieLSVIhabitats, "Pool"),
+      inherits(ConnectieLSVIhabitats, "DBIConnection"),
       msg = "Er is geen connectie met de databank met de LSVI-indicatoren. Maak een connectiepool met maakConnectiePool of geef een connectie mee met de parameter ConnectieLSVIhabitats." #nolint
     )
 
