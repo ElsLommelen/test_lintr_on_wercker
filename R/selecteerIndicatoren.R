@@ -57,17 +57,13 @@ selecteerIndicatoren <-
         ON Habitatselectie.HabitatsubtypeId = Ht2.ParentId
       )
       SELECT Ht1.Code AS Habitattype,
-          Ht2.Code AS Habitatsubtype,
-          Indicator_habitat.Id AS Indicator_habitatID,
-          Indicator_habitat.TaxongroepId
+          Ht2.Code AS Habitatsubtype
       FROM Habitatselectie
         INNER JOIN Habitattype Ht1
           ON Habitatselectie.HabitattypeId = Ht1.Id
         INNER JOIN Habitattype Ht2
           ON Habitatselectie.HabitatsubtypeId = Ht2.Id
-        INNER JOIN Habitatgroep ON Ht1.HabitatgroepId = Habitatgroep.Id
-      INNER JOIN Indicator_habitat
-      ON Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID"
+        INNER JOIN Habitatgroep ON Ht1.HabitatgroepId = Habitatgroep.Id"
 
     Selectiegegevens <-
       dbGetQuery(ConnectieLSVIhabitats, query) %>%
