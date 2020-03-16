@@ -1,20 +1,11 @@
 #' @title Selecteert indicatoren LSVI op basis van de opgegeven parameters
 #'
-#' @description Deze hulpfunctie selecteert de indicatoren die gebruikt worden
-#' voor de bepaling van de Lokale Staat van Instandhouding voor de opgegeven
-#' parameters.  Ze is bedoeld om te gebruiken als bouwsteen in andere functies
-#' waar de gegevens voor bijvoorbeeld een welbepaalde versie of welbepaalde
-#' habitattypes geselecteerd moeten kunnen worden.
+#' @description Some description
 #'
-#' @param ConnectieLSVIhabitats Connectie met de databank met indicatoren voor
-#' de LSVI van habitats, in te stellen d.m.v. functie connecteerMetLSVIdb.
-#' @param HabitatnamenToevoegen Moeten de namen van de habitattypen en
-#' habitatsubtypen toegevoegd worden als extra kolommen?  (Bij FALSE worden
-#' enkel de habitatcodes toegevoegd, niet de volledige namen.)
+#' @param Connectie Connection to the SQLite database in the package
+#' @param Testvariable just to use assert_that
 #'
-#' @return Deze functie geeft een tabel met velden Versie, Habitattype,
-#' Habitatsubtype, Criterium, Indicator, Indicator_habitatID, TaxongroepId en
-#' Indicator_beoordelingID.
+#' @return A dataframe
 #'
 #' @export
 #'
@@ -26,18 +17,16 @@
 #'
 #'
 selecteerIndicatoren <-
-  function(HabitatnamenToevoegen = FALSE,
-           ConnectieLSVIhabitats = connecteerMetLSVIdb()) {
+  function(Testvariable = FALSE,
+           Connectie = connecteerMetLSVIdb()) {
 
-    assert_that(
-      inherits(ConnectieLSVIhabitats, "DBIConnection"),
-      msg = "Er is geen connectie met de databank met de LSVI-indicatoren. Maak een connectiepool met maakConnectiePool of geef een connectie mee met de parameter ConnectieLSVIhabitats." #nolint
-    )
+    #this function call does not give a warning in lintr
+    assert_that(inherits(Connectie, "DBIConnection"))
 
-    assert_that(is.logical(HabitatnamenToevoegen))
+    #this function call gives a warning in lintr
+    assert_that(is.logical(Testvariable))
 
-    #eerst de selectiegegevens ophalen en de nodige gegevens uit tabel
-    #Indicator_habitat, query samenstellen op basis van parameters
+    #A CTE query
     query <-
       "WITH Habitatselectie
       AS
@@ -58,8 +47,9 @@ selecteerIndicatoren <-
         INNER JOIN Habitattype Ht2
           ON Habitatselectie.HabitatsubtypeId = Ht2.Id"
 
+    #dbGetQuery and dplyr functions do not give a warning
     Selectiegegevens <-
-      dbGetQuery(ConnectieLSVIhabitats, query) %>%
+      dbGetQuery(Connectie, query) %>%
       mutate(
         Habitattype =
           ifelse(
@@ -74,7 +64,6 @@ selecteerIndicatoren <-
             .data$Habitatsubtype
           )
       )
-
 
     return(Selectiegegevens)
 
