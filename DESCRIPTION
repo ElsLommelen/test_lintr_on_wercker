@@ -33,8 +33,7 @@ Imports:
     rlang,
     stringr,
     RSQLite,
-    odbc,
-    pool
+    odbc
 Suggests:
     knitr
 RoxygenNote: 6.1.1
@@ -47,5 +46,4 @@ Collate:
     'geefInvoervereisten.R'
     'geefUniekeWaarden.R'
     'invoercontroleVersie.R'
-    'maakConnectiePool.R'
     'selecteerIndicatoren.R'
