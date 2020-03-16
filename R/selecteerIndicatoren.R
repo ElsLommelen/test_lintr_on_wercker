@@ -1,20 +1,20 @@
-#' @title Selecteert indicatoren LSVI op basis van de opgegeven parameters
+#' @title Just a test
 #'
 #' @description Some description
 #'
-#' @param Connectie Connection to the SQLite database in the package
+#' @param Teststring Just a string to test
 #'
 #' @return A dataframe
 #'
 #' @export
 #'
 #'
-#' @importFrom assertthat assert_that
+#' @importFrom assertthat assert_that is.string
 #'
 #'
 selecteerIndicatoren <-
-  function(Connectie = connecteerMetLSVIdb()) {
+  function(Teststring = "string") {
 
     #this function call only gives a warning in lintr if this comment precedes
-    assert_that(inherits(Connectie, "DBIConnection"))
+    assert_that(is.string(Teststring))
   }

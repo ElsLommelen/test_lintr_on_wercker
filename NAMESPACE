@@ -3,6 +3,6 @@
 export(connecteerMetLSVIdb)
 export(selecteerIndicatoren)
 importFrom(DBI,dbConnect)
-importFrom(DBI,dbGetQuery)
 importFrom(RSQLite,SQLite)
 importFrom(assertthat,assert_that)
+importFrom(assertthat,is.string)
