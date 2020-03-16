@@ -40,5 +40,4 @@ Collate:
     'connecteerMetLSVIdb.R'
     'controleerInvoerwaarde.R'
     'geefUniekeWaarden.R'
-    'invoercontroleVersie.R'
     'selecteerIndicatoren.R'

@@ -3,7 +3,6 @@
 export(connecteerMetLSVIdb)
 export(controleerInvoerwaarde)
 export(geefUniekeWaarden)
-export(invoercontroleVersie)
 export(selecteerIndicatoren)
 importFrom(DBI,dbConnect)
 importFrom(DBI,dbGetQuery)
