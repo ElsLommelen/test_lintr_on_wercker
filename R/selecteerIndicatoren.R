@@ -3,7 +3,6 @@
 #' @description Some description
 #'
 #' @param Connectie Connection to the SQLite database in the package
-#' @param Testvariable just to use assert_that
 #'
 #' @return A dataframe
 #'
@@ -20,9 +19,6 @@ selecteerIndicatoren <-
 
     #this function call only gives a warning in lintr if this comment precedes
     assert_that(inherits(Connectie, "DBIConnection"))
-
-    #this function call gives a warning in lintr
-    assert_that(is.logical(Testvariable))
 
     #A CTE query
     query <-
