@@ -58,7 +58,7 @@ selecteerIndicatoren <-
           ON Habitatselectie.HabitatsubtypeId = Ht2.ParentId
         )
         SELECT Versie.VersieLSVI AS Versie, Ht1.Code AS Habitattype,
-            Ht2.Code AS Habitatsubtype, %s
+            Ht2.Code AS Habitatsubtype,
             Criterium.Naam AS Criterium, Indicator.Naam AS Indicator,
             Indicator_habitat.Id AS Indicator_habitatID,
             Indicator_habitat.TaxongroepId,
