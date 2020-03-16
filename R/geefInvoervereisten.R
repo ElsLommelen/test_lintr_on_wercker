@@ -163,9 +163,7 @@ geefInvoervereisten <- function(Versie = "alle",
     sprintf("SELECT CV.Id, CV.BeoordelingId AS BeoordelingID,
               CV.VoorwaardeID1, CV.VoorwaardeID2,
               CV.ChildID1, CV.ChildID2, CV.BewerkingOperator
-            FROM CombinerenVoorwaarden CV
-            WHERE CV.BeoordelingId in ('%s')",
-              BeoordelingIDs)
+            FROM CombinerenVoorwaarden CV")
 
   Voorwaarden <-
     dbGetQuery(ConnectieLSVIhabitats, query_combineren_voorwaarden) %>%
@@ -302,8 +300,7 @@ geefInvoervereisten <- function(Versie = "alle",
             LEFT JOIN (Lijst AS SubLijst
                       LEFT JOIN LijstItem AS SubLijstItem
                         ON SubLijst.Id = SubLijstItem.LijstId)
-              ON Voorwaarde.SubInvoermaskerId = SubLijst.Id
-            WHERE Voorwaarde.Id in ('%s')", VoorwaardenIDs)
+              ON Voorwaarde.SubInvoermaskerId = SubLijst.Id")
 
   Voorwaardeinfo <-
     dbGetQuery(
