@@ -42,14 +42,6 @@ selecteerIndicatoren <-
 
     assert_that(is.logical(HabitatnamenToevoegen))
 
-
-    query_uitbreiding <- ifelse(HabitatnamenToevoegen,
-                                "Ht1.Naam AS Habitatnaam,
-    Ht2.Naam AS Habitatsubtypenaam,
-    cast(Ht2.Omschrijving AS nvarchar(10)) AS HabitatsubtypeOmschrijving,
-                                Habitatgroep.Naam AS Habitatgroepnaam, ",
-                                "")
-
     #eerst de selectiegegevens ophalen en de nodige gegevens uit tabel
     #Indicator_habitat, query samenstellen op basis van parameters
     query <-
@@ -87,8 +79,7 @@ selecteerIndicatoren <-
         LEFT JOIN IndicatortabellenKoppeling
         ON Indicator_habitat.Id =
           IndicatortabellenKoppeling.Indicator_habitatId)
-        ON Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID",
-        query_uitbreiding
+        ON Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID"
       )
 
     Selectiegegevens <-
