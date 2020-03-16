@@ -60,24 +60,19 @@ selecteerIndicatoren <-
           Ht2.Code AS Habitatsubtype,
           Criterium.Naam AS Criterium, Indicator.Naam AS Indicator,
           Indicator_habitat.Id AS Indicator_habitatID,
-          Indicator_habitat.TaxongroepId,
-          IndicatortabellenKoppeling.Indicator_beoordelingId
-            AS Indicator_beoordelingID
+          Indicator_habitat.TaxongroepId
       FROM Habitatselectie
         INNER JOIN Habitattype Ht1
           ON Habitatselectie.HabitattypeId = Ht1.Id
         INNER JOIN Habitattype Ht2
           ON Habitatselectie.HabitatsubtypeId = Ht2.Id
         INNER JOIN Habitatgroep ON Ht1.HabitatgroepId = Habitatgroep.Id
-      INNER JOIN (((Indicator_habitat
+      INNER JOIN ((Indicator_habitat
       INNER JOIN
         (Indicator INNER JOIN Criterium
           ON Indicator.CriteriumID = Criterium.Id)
       ON Indicator_habitat.IndicatorID = Indicator.Id)
       INNER JOIN Versie ON Indicator_habitat.VersieID = Versie.Id)
-      LEFT JOIN IndicatortabellenKoppeling
-      ON Indicator_habitat.Id =
-        IndicatortabellenKoppeling.Indicator_habitatId)
       ON Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID"
 
     Selectiegegevens <-
