@@ -12,8 +12,6 @@
 #'
 #' @importFrom DBI dbGetQuery
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr %>% mutate
-#' @importFrom rlang .data
 #'
 #'
 selecteerIndicatoren <-
@@ -49,21 +47,7 @@ selecteerIndicatoren <-
 
     #dbGetQuery and dplyr functions do not give a warning
     Selectiegegevens <-
-      dbGetQuery(Connectie, query) %>%
-      mutate(
-        Habitattype =
-          ifelse(
-            rep(is.numeric(.data$Habitattype), length(.data$Habitattype)),
-            as.character(.data$Habitattype),
-            .data$Habitattype
-          ),
-        Habitatsubtype =
-          ifelse(
-            rep(is.numeric(.data$Habitatsubtype), length(.data$Habitatsubtype)),
-            as.character(.data$Habitatsubtype),
-            .data$Habitatsubtype
-          )
-      )
+      dbGetQuery(Connectie, query)
 
     return(Selectiegegevens)
 
