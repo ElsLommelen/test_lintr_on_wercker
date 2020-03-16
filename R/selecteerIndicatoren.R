@@ -62,8 +62,7 @@ selecteerIndicatoren <-
         INNER JOIN Habitattype Ht1
           ON Habitatselectie.HabitattypeId = Ht1.Id
         INNER JOIN Habitattype Ht2
-          ON Habitatselectie.HabitatsubtypeId = Ht2.Id
-        INNER JOIN Habitatgroep ON Ht1.HabitatgroepId = Habitatgroep.Id"
+          ON Habitatselectie.HabitatsubtypeId = Ht2.Id"
 
     Selectiegegevens <-
       dbGetQuery(ConnectieLSVIhabitats, query) %>%
