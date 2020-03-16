@@ -44,11 +44,6 @@
 #'
 #' @inheritParams selecteerIndicatoren
 #' @param Kwaliteitsniveau blabla
-#' @param Weergave Wat moet er in de tabel weergegeven worden?  De default
-#' 'basis' geeft een meer overzichtelijke tabel waarbij mogelijke invoerwaarden
-#' gescheiden door een komma in 1 cel weergegeven worden, 'uitgebreid' geeft
-#' deze invoerwaarden met alle bijhorende informatie weer in aparte records,
-#' waardoor de tabel groot en onoverzichtelijk is.
 #'
 #' @return Deze functie geeft een tabel met de hierboven beschreven informatie
 #' uit de databank.
@@ -86,7 +81,6 @@ geefInvoervereisten <- function(Versie = "alle",
                                 Criterium = "alle",
                                 Indicator = "alle",
                                 Kwaliteitsniveau = "alle",
-                                Weergave = c("basis", "uitgebreid"),
                                 ConnectieLSVIhabitats = NULL) {
 
   if (is.null(ConnectieLSVIhabitats)) {
@@ -99,7 +93,6 @@ geefInvoervereisten <- function(Versie = "alle",
       inherits(ConnectieLSVIhabitats, "Pool"),
     msg = "Er is geen connectie met de databank met de LSVI-indicatoren. Maak een connectiepool met maakConnectiePool of geef een connectie mee met de parameter ConnectieLSVIhabitats." #nolint
   )
-  match.arg(Weergave)
 
 
   Selectiewaarden <-
@@ -317,50 +310,6 @@ geefInvoervereisten <- function(Versie = "alle",
       ConnectieLSVIhabitats,
       query_voorwaardeinfo
     )
-
-  if (tolower(Weergave[1]) == "basis") {
-    Voorwaardeinfo <- Voorwaardeinfo %>%
-      arrange(
-        .data$Invoervolgnr,
-        .data$Studievolgnr,
-        .data$SubInvoervolgnr
-      ) %>%
-      group_by(
-        .data$VoorwaardeID, .data$Voorwaarde,
-        .data$Referentiewaarde,
-        .data$Operator, .data$Maximumwaarde, .data$AnalyseVariabele,
-        .data$Eenheid, .data$TypeVariabele,
-        .data$Invoertype,
-        .data$TaxongroepId, .data$TaxongroepNaam,
-        .data$Studiegroepnaam, .data$Studielijstnaam,
-        .data$SubAnalyseVariabele, .data$SubEenheid,
-        .data$TypeSubVariabele, .data$SubReferentiewaarde,
-        .data$SubOperator, .data$SubInvoertype
-      ) %>%
-      summarise(
-        Invoerwaarde =
-          paste(unique(.data$Invoerwaarde), collapse = ", "),
-        Studiewaarde =
-          paste(unique(.data$Studiewaarde), collapse = ", "),
-        SubInvoerwaarde =
-          paste(unique(.data$SubInvoerwaarde), collapse = ", "),
-      ) %>%
-      ungroup() %>%                   #volgorde aanpassen
-      select(
-        .data$VoorwaardeID, .data$Voorwaarde,
-        .data$Referentiewaarde,
-        .data$Operator, .data$Maximumwaarde, .data$AnalyseVariabele,
-        .data$Eenheid, .data$TypeVariabele,
-        .data$Invoertype, .data$Invoerwaarde,
-        .data$TaxongroepId, .data$TaxongroepNaam,
-        .data$Studiegroepnaam, .data$Studielijstnaam,
-        .data$Studiewaarde,
-        .data$SubAnalyseVariabele, .data$SubEenheid,
-        .data$TypeSubVariabele, .data$SubReferentiewaarde,
-        .data$SubOperator, .data$SubInvoertype,
-        .data$SubInvoerwaarde
-      )
-  }
 
   Invoervereisten <- Selectiewaarden %>%
     left_join(
