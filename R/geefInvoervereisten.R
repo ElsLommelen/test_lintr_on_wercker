@@ -73,12 +73,7 @@
 #' @importFrom assertthat assert_that is.string
 #'
 #'
-geefInvoervereisten <- function(Versie = "alle",
-                                Habitatgroep = "alle",
-                                Habitattype = "alle",
-                                Criterium = "alle",
-                                Indicator = "alle",
-                                ConnectieLSVIhabitats = NULL) {
+geefInvoervereisten <- function(ConnectieLSVIhabitats = NULL) {
 
   if (is.null(ConnectieLSVIhabitats)) {
     if (exists("ConnectiePool")) {
@@ -91,36 +86,6 @@ geefInvoervereisten <- function(Versie = "alle",
     msg = "Er is geen connectie met de databank met de LSVI-indicatoren. Maak een connectiepool met maakConnectiePool of geef een connectie mee met de parameter ConnectieLSVIhabitats." #nolint
   )
 
-
-  Selectiewaarden <-
-    selecteerIndicatoren(
-      Versie = Versie,
-      Habitatgroep = Habitatgroep,
-      Habitattype = Habitattype,
-      Criterium = Criterium,
-      Indicator = Indicator,
-      ConnectieLSVIhabitats = ConnectieLSVIhabitats
-    ) %>%
-    select(
-      .data$Versie,
-      .data$Habitattype,
-      .data$Habitatsubtype,
-      .data$Indicator_beoordelingID
-    ) %>%
-    distinct() %>%
-    filter(!is.na(.data$Indicator_beoordelingID))
-
-  indicator_beoordeling_ids <-
-    paste(
-      unique(
-        (Selectiewaarden %>%
-           filter(
-             !is.na(.data$Indicator_beoordelingID)
-           )
-         )$Indicator_beoordelingID
-      ),
-      collapse = "','"
-    )
 
   query_lsvi_info <-
     sprintf("SELECT Indicator_beoordeling.Id AS Indicator_beoordelingID,
@@ -136,9 +101,7 @@ geefInvoervereisten <- function(Versie = "alle",
             LEFT JOIN
               (Indicator INNER JOIN Criterium
                 ON Indicator.CriteriumId = Criterium.Id)
-            ON Indicator_beoordeling.IndicatorId = Indicator.Id
-            WHERE Indicator_beoordeling.Id in ('%s')",
-            indicator_beoordeling_ids)
+            ON Indicator_beoordeling.IndicatorId = Indicator.Id")
 
   LSVIinfo <-
     dbGetQuery(ConnectieLSVIhabitats, query_lsvi_info)
@@ -300,11 +263,7 @@ geefInvoervereisten <- function(Versie = "alle",
       query_voorwaardeinfo
     )
 
-  Invoervereisten <- Selectiewaarden %>%
-    left_join(
-      LSVIinfo,
-      by = c("Indicator_beoordelingID" = "Indicator_beoordelingID")
-    ) %>%
+  Invoervereisten <- LSVIinfo %>%
     mutate(Indicator_beoordelingID = NULL) %>%
     left_join(BasisVoorwaarden, by = c("BeoordelingID" = "BeoordelingID")) %>%
     left_join(Voorwaardeinfo, by = c("VoorwaardeID" = "VoorwaardeID")) %>%
