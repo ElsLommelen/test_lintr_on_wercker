@@ -61,11 +61,7 @@
 #'
 #'
 selecteerIndicatoren <-
-  function(Versie = "alle",
-           Habitatgroep = "alle",
-           Habitattype = "alle",
-           Criterium = "alle",
-           Indicator = "alle",
+  function(Habitattype = "alle",
            HabitatnamenToevoegen = FALSE,
            ConnectieLSVIhabitats = NULL) {
 
@@ -80,14 +76,6 @@ selecteerIndicatoren <-
       msg = "Er is geen connectie met de databank met de LSVI-indicatoren. Maak een connectiepool met maakConnectiePool of geef een connectie mee met de parameter ConnectieLSVIhabitats." #nolint
     )
 
-    assert_that(is.string(Habitatgroep))
-    Habitatgroep <- str_to_sentence(Habitatgroep)
-    Habitatgroep <- ifelse(Habitatgroep == "Alle", "alle", Habitatgroep)
-    controleerInvoerwaarde(
-      "Habitatgroep", Habitatgroep,
-      "Habitatgroep", "Naam", ConnectieLSVIhabitats, Tolower = FALSE
-    )
-
     if (is.numeric(Habitattype)) {
       Habitattype <- as.character(Habitattype)
     }
@@ -95,20 +83,6 @@ selecteerIndicatoren <-
     controleerInvoerwaarde(
       "Habitattype", Habitattype,
       "Habitattype", "Code", ConnectieLSVIhabitats, Tolower = FALSE
-    )
-
-    assert_that(is.string(Criterium))
-    Criterium <- str_to_sentence(Criterium)
-    Criterium <- ifelse(Criterium == "Alle", "alle", Criterium)
-    controleerInvoerwaarde(
-      "Criterium", Criterium,
-      "Criterium", "Naam", ConnectieLSVIhabitats, Tolower = FALSE
-    )
-
-    assert_that(is.string(Indicator))
-    controleerInvoerwaarde(
-      "Indicator", Indicator,
-      "Indicator", "Naam", ConnectieLSVIhabitats, Tolower = FALSE
     )
 
     assert_that(is.logical(HabitatnamenToevoegen))
@@ -179,47 +153,6 @@ selecteerIndicatoren <-
         ON %s",
         query_uitbreiding, Join, QueryEinde
       )
-    if (Versie[1] != "alle") {
-      if (Parametervoorwaarde) {
-        Voegwoord <- "AND"
-      } else {
-        Voegwoord <- "WHERE"
-        Parametervoorwaarde <- TRUE
-      }
-      query <-
-        sprintf("%s %s Versie.VersieLSVI = '%s'", query, Voegwoord, Versie)
-    }
-    if (Habitatgroep[1] != "alle") {
-      if (Parametervoorwaarde) {
-        Voegwoord <- "AND"
-      } else {
-        Voegwoord <- "WHERE"
-        Parametervoorwaarde <- TRUE
-      }
-      query <-
-        sprintf("%s %s Habitatgroep.Naam = '%s'",
-                query, Voegwoord, Habitatgroep)
-    }
-    if (Criterium[1] != "alle") {
-      if (Parametervoorwaarde) {
-        Voegwoord <- "AND"
-      } else {
-        Voegwoord <- "WHERE"
-        Parametervoorwaarde <- TRUE
-      }
-      query <-
-        sprintf("%s %s Criterium.Naam = '%s'", query, Voegwoord, Criterium)
-    }
-    if (Indicator[1] != "alle") {
-      if (Parametervoorwaarde) {
-        Voegwoord <- "AND"
-      } else {
-        Voegwoord <- "WHERE"
-        Parametervoorwaarde <- TRUE
-      }
-      query <-
-        sprintf("%s %s Indicator.Naam = '%s'", query, Voegwoord, Indicator)
-    }
 
     Selectiegegevens <-
       dbGetQuery(ConnectieLSVIhabitats, query) %>%
