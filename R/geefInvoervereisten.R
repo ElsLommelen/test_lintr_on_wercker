@@ -43,7 +43,6 @@
 #'
 #'
 #' @inheritParams selecteerIndicatoren
-#' @param Kwaliteitsniveau blabla
 #'
 #' @return Deze functie geeft een tabel met de hierboven beschreven informatie
 #' uit de databank.
@@ -58,8 +57,7 @@
 #' maakConnectiePool()
 #' geefInvoervereisten(
 #'   Versie = "Versie 2.0",
-#'   Habitattype = "4030",
-#'   Kwaliteitsniveau = "1"
+#'   Habitattype = "4030"
 #' )
 #' library(pool)
 #' poolClose(ConnectiePool)
@@ -80,7 +78,6 @@ geefInvoervereisten <- function(Versie = "alle",
                                 Habitattype = "alle",
                                 Criterium = "alle",
                                 Indicator = "alle",
-                                Kwaliteitsniveau = "alle",
                                 ConnectieLSVIhabitats = NULL) {
 
   if (is.null(ConnectieLSVIhabitats)) {
@@ -125,11 +122,6 @@ geefInvoervereisten <- function(Versie = "alle",
       collapse = "','"
     )
 
-  query_select_kwaliteitsniveau <-
-    ifelse(Kwaliteitsniveau[1] == "alle", "",
-           sprintf("AND Beoordeling.Kwaliteitsniveau = '%s'",
-                   Kwaliteitsniveau))
-
   query_lsvi_info <-
     sprintf("SELECT Indicator_beoordeling.Id AS Indicator_beoordelingID,
             Criterium.Naam AS Criterium, Indicator.Naam AS Indicator,
@@ -145,8 +137,8 @@ geefInvoervereisten <- function(Versie = "alle",
               (Indicator INNER JOIN Criterium
                 ON Indicator.CriteriumId = Criterium.Id)
             ON Indicator_beoordeling.IndicatorId = Indicator.Id
-            WHERE Indicator_beoordeling.Id in ('%s') %s",
-            indicator_beoordeling_ids, query_select_kwaliteitsniveau)
+            WHERE Indicator_beoordeling.Id in ('%s')",
+            indicator_beoordeling_ids)
 
   LSVIinfo <-
     dbGetQuery(ConnectieLSVIhabitats, query_lsvi_info)
