@@ -27,13 +27,8 @@
 #'
 selecteerIndicatoren <-
   function(HabitatnamenToevoegen = FALSE,
-           ConnectieLSVIhabitats = NULL) {
+           ConnectieLSVIhabitats = connecteerMetLSVIdb()) {
 
-    if (is.null(ConnectieLSVIhabitats)) {
-      if (exists("ConnectiePool")) {
-        ConnectieLSVIhabitats <- get("ConnectiePool", envir = .GlobalEnv)
-      }
-    }
     assert_that(
       inherits(ConnectieLSVIhabitats, "DBIConnection") |
         inherits(ConnectieLSVIhabitats, "Pool"),
