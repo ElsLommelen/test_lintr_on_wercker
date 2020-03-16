@@ -45,42 +45,40 @@ selecteerIndicatoren <-
     #eerst de selectiegegevens ophalen en de nodige gegevens uit tabel
     #Indicator_habitat, query samenstellen op basis van parameters
     query <-
-      sprintf(
-        "WITH Habitatselectie
-        AS
-        (
-          SELECT Ht1.Id AS HabitattypeId, Ht1.Id AS HabitatsubtypeId
-          FROM Habitattype AS Ht1
-          WHERE Ht1.ParentId IS NULL
-        UNION ALL
-          SELECT Habitatselectie.HabitattypeId, Ht2.Id AS HabitatsubtypeId
-          FROM Habitatselectie INNER JOIN Habitattype AS Ht2
-          ON Habitatselectie.HabitatsubtypeId = Ht2.ParentId
-        )
-        SELECT Versie.VersieLSVI AS Versie, Ht1.Code AS Habitattype,
-            Ht2.Code AS Habitatsubtype,
-            Criterium.Naam AS Criterium, Indicator.Naam AS Indicator,
-            Indicator_habitat.Id AS Indicator_habitatID,
-            Indicator_habitat.TaxongroepId,
-            IndicatortabellenKoppeling.Indicator_beoordelingId
-              AS Indicator_beoordelingID
-        FROM Habitatselectie
-          INNER JOIN Habitattype Ht1
-            ON Habitatselectie.HabitattypeId = Ht1.Id
-          INNER JOIN Habitattype Ht2
-            ON Habitatselectie.HabitatsubtypeId = Ht2.Id
-          INNER JOIN Habitatgroep ON Ht1.HabitatgroepId = Habitatgroep.Id
-        INNER JOIN (((Indicator_habitat
-        INNER JOIN
-          (Indicator INNER JOIN Criterium
-            ON Indicator.CriteriumID = Criterium.Id)
-        ON Indicator_habitat.IndicatorID = Indicator.Id)
-        INNER JOIN Versie ON Indicator_habitat.VersieID = Versie.Id)
-        LEFT JOIN IndicatortabellenKoppeling
-        ON Indicator_habitat.Id =
-          IndicatortabellenKoppeling.Indicator_habitatId)
-        ON Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID"
+      "WITH Habitatselectie
+      AS
+      (
+        SELECT Ht1.Id AS HabitattypeId, Ht1.Id AS HabitatsubtypeId
+        FROM Habitattype AS Ht1
+        WHERE Ht1.ParentId IS NULL
+      UNION ALL
+        SELECT Habitatselectie.HabitattypeId, Ht2.Id AS HabitatsubtypeId
+        FROM Habitatselectie INNER JOIN Habitattype AS Ht2
+        ON Habitatselectie.HabitatsubtypeId = Ht2.ParentId
       )
+      SELECT Versie.VersieLSVI AS Versie, Ht1.Code AS Habitattype,
+          Ht2.Code AS Habitatsubtype,
+          Criterium.Naam AS Criterium, Indicator.Naam AS Indicator,
+          Indicator_habitat.Id AS Indicator_habitatID,
+          Indicator_habitat.TaxongroepId,
+          IndicatortabellenKoppeling.Indicator_beoordelingId
+            AS Indicator_beoordelingID
+      FROM Habitatselectie
+        INNER JOIN Habitattype Ht1
+          ON Habitatselectie.HabitattypeId = Ht1.Id
+        INNER JOIN Habitattype Ht2
+          ON Habitatselectie.HabitatsubtypeId = Ht2.Id
+        INNER JOIN Habitatgroep ON Ht1.HabitatgroepId = Habitatgroep.Id
+      INNER JOIN (((Indicator_habitat
+      INNER JOIN
+        (Indicator INNER JOIN Criterium
+          ON Indicator.CriteriumID = Criterium.Id)
+      ON Indicator_habitat.IndicatorID = Indicator.Id)
+      INNER JOIN Versie ON Indicator_habitat.VersieID = Versie.Id)
+      LEFT JOIN IndicatortabellenKoppeling
+      ON Indicator_habitat.Id =
+        IndicatortabellenKoppeling.Indicator_habitatId)
+      ON Habitatselectie.HabitatsubtypeId = Indicator_habitat.HabitattypeID"
 
     Selectiegegevens <-
       dbGetQuery(ConnectieLSVIhabitats, query) %>%
