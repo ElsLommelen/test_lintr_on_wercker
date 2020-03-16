@@ -38,6 +38,4 @@ URL: https://github.com/ElsLommelen/test_lintr_on_wercker
 BugReports: https://github.com/ElsLommelen/test_lintr_on_wercker/issues
 Collate: 
     'connecteerMetLSVIdb.R'
-    'controleerInvoerwaarde.R'
-    'geefUniekeWaarden.R'
     'selecteerIndicatoren.R'
