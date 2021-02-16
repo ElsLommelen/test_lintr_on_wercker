@@ -14,12 +14,15 @@ License: GPL-3
 LazyData: true
 Encoding: UTF-8
 Imports:
-    assertthat
+    assertthat,
+    DBI,
+    RSQLite
 Suggests:
     knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 URL: https://github.com/ElsLommelen/test_lintr_on_wercker
 BugReports: https://github.com/ElsLommelen/test_lintr_on_wercker/issues
 Collate: 
     'selecteerIndicatoren.R'
+    'connecteerMetLSVIdb.R'
